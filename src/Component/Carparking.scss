@@ -52,3 +52,16 @@ input{
         }
     }
 }
+.pay-btn{
+    height: 30px;
+}
+
+.ReactModalPortal{
+    .ReactModal__Overlay.ReactModal__Overlay--after-open{
+       
+        background-color: rgb(26 26 26 / 75%)  !important;
+
+    }
+   
+}
+

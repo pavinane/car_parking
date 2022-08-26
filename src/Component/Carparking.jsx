@@ -1,10 +1,33 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 // import shortid from "shortid";
+import Modal from "react-modal/lib/components/Modal";
 import "./Carparking.scss";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    height: "50%",
+    width: "400px",
+    transform: "translate(-50%, -50%)",
+    // overflow: 'visible',
+    padding: 0,
+    border: "none",
+    borderRadius: "10px",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+};
 
 function Carparking() {
   const [lots, SetLots] = useState([]);
+  const [openModels, setOpenModels] = useState(false);
+
+  function closePopup() {
+    setOpenModels(false);
+  }
 
   const {
     register,
@@ -45,8 +68,12 @@ function Carparking() {
     let list = [...lots];
     list[index].status = "active";
     list[index].register = "";
+
     SetLots(list);
-    console.log(index);
+    closePopup();
+    // if (list.register) {
+    //   closePopup();
+    // }
   };
 
   return (
@@ -94,10 +121,30 @@ function Carparking() {
                   <h1>{items.register}</h1>
                   <button
                     className="btn btn-danger col-sm-6"
-                    onClick={() => removePark(index)}
+                    onClick={() => {
+                      setOpenModels(true);
+                    }}
+
+                    // onClick={() => removePark(index)}
                   >
                     leave
                   </button>
+
+                  <Modal
+                    isOpen={openModels}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                  >
+                    <div className="park-bill">
+                      <h1 className="fs-3 mb-3">First 2 hours : $10</h1>
+                      <button
+                        className="btn btn-danger col-sm-6 "
+                        onClick={() => removePark(index)}
+                      >
+                        Pay
+                      </button>
+                    </div>
+                  </Modal>
                 </>
               ) : null}
             </div>
