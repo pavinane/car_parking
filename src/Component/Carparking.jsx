@@ -23,11 +23,8 @@ const customStyles = {
 
 function Carparking() {
   const [lots, SetLots] = useState([]);
+  const [full, setFull] = useState();
   const [openModels, setOpenModels] = useState(false);
-
-  function closePopup() {
-    setOpenModels(false);
-  }
 
   const {
     register,
@@ -55,6 +52,8 @@ function Carparking() {
     let index = lots.findIndex((x) => x.status === "active");
     if (index === -1) {
       console.log("err");
+      // setFull("Park slot Is Full");
+      alert("Park slot Is Full");
     }
     let list = [...lots];
     list[index].status = "inactive";
@@ -64,13 +63,20 @@ function Carparking() {
     console.log("lsit", list);
   };
 
+  // function closePopup() {
+  //   setOpenModels(false);
+  // }
+
   const removePark = (index) => {
     let list = [...lots];
+
     list[index].status = "active";
     list[index].register = "";
-
+    list[index].time = new Date();
     SetLots(list);
-    closePopup();
+    alert("2 hours = $10");
+
+    // closePopup(true);
     // if (list.register) {
     //   closePopup();
     // }
@@ -104,6 +110,7 @@ function Carparking() {
 
         <CarBooking Submit={onHandleSubmit} />
       </div>
+      {/* <h1 className="text-warning text-center mb-4">{full}</h1> */}
       <div className="booking-slots">
         {lots.map((items, index) => {
           return (
@@ -121,19 +128,17 @@ function Carparking() {
                   <h1>{items.register}</h1>
                   <button
                     className="btn btn-danger col-sm-6"
-                    onClick={() => {
-                      setOpenModels(true);
-                    }}
+                    // onClick={() => setOpenModels(true)}
 
-                    // onClick={() => removePark(index)}
+                    onClick={() => removePark(index)}
                   >
-                    leave
+                    Leave
                   </button>
 
                   <Modal
                     isOpen={openModels}
                     style={customStyles}
-                    contentLabel="Example Modal"
+                    contentLabel="pay bill"
                   >
                     <div className="park-bill">
                       <h1 className="fs-3 mb-3">First 2 hours : $10</h1>
