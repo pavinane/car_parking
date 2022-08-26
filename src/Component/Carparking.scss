@@ -1,0 +1,54 @@
+*{
+    outline: none;
+}
+
+input{
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    padding: 20px;
+}
+.parking-slot{
+    height: 300px;
+}
+
+.booking-slots{
+    width: 1200px;
+ margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    grid-gap: 20px;
+    .park-box{
+        width: 250px;
+        height: 250px;
+    }
+    h1{
+        text-transform: uppercase;
+        font-size: 30px;
+    }
+    button{
+      margin-top: 30px;  
+    }
+    
+
+}
+.nobook{
+   background-color: pink !important; 
+}
+.booked{
+    background-color: green !important;
+}
+
+
+.book-car-slot{
+    form{
+        input[type=text]{
+            text-transform: uppercase;
+        }
+        ::placeholder{
+            text-transform: capitalize;
+        }
+    }
+}
