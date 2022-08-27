@@ -23,8 +23,9 @@ const customStyles = {
 
 function Carparking() {
   const [lots, SetLots] = useState([]);
-  const [full, setFull] = useState();
+  // const [full, setFull] = useState();
   const [openModels, setOpenModels] = useState(false);
+  const [indexes, seIndexes] = useState(null);
 
   const {
     register,
@@ -63,9 +64,9 @@ function Carparking() {
     console.log("lsit", list);
   };
 
-  // function closePopup() {
-  //   setOpenModels(false);
-  // }
+  function closePopup() {
+    setOpenModels(false);
+  }
 
   const removePark = (index) => {
     let list = [...lots];
@@ -74,9 +75,10 @@ function Carparking() {
     list[index].register = "";
     list[index].time = new Date();
     SetLots(list);
-    alert("2 hours = $10");
 
-    // closePopup(true);
+    // alert("2 hours = $10");
+
+    closePopup(true);
     // if (list.register) {
     //   closePopup();
     // }
@@ -128,37 +130,45 @@ function Carparking() {
                   <h1>{items.register}</h1>
                   <button
                     className="btn btn-danger col-sm-6"
-                    // onClick={() => setOpenModels(true)}
+                    onClick={() => {
+                      setOpenModels(true);
+                      seIndexes(index);
+                    }}
 
-                    onClick={() => removePark(index)}
+                    // onClick={() => removePark(index)}
                   >
                     Leave
                   </button>
-
-                  <Modal
-                    isOpen={openModels}
-                    style={customStyles}
-                    contentLabel="pay bill"
-                  >
-                    <div className="park-bill">
-                      <h1 className="fs-3 mb-3">First 2 hours : $10</h1>
-                      <button
-                        className="btn btn-danger col-sm-6 "
-                        onClick={() => removePark(index)}
-                      >
-                        Pay
-                      </button>
-                    </div>
-                  </Modal>
                 </>
               ) : null}
             </div>
           );
         })}
       </div>
+      <Modelopen
+        openModels={openModels}
+        removePark={removePark}
+        index={indexes}
+      />
     </div>
   );
 }
+
+const Modelopen = ({ openModels, removePark, index }) => {
+  return (
+    <Modal isOpen={openModels} style={customStyles} contentLabel="pay bill">
+      <div className="park-bill">
+        <h1 className="fs-3 mb-3">First 2 hours : $10</h1>
+        <button
+          className="btn btn-danger col-sm-6 "
+          onClick={() => removePark(index)}
+        >
+          Pay
+        </button>
+      </div>
+    </Modal>
+  );
+};
 
 export default Carparking;
 
